@@ -16,14 +16,13 @@ public class MusicaDAO {
 		Connection con = ConnectionFactory.getConnection();
 		PreparedStatement stmt = null;
 		try {
-			stmt = con.prepareStatement("INSERT INTO `spotipy`(`musica_titulo`, `musica_cantores`, `musica_compositores`, `musica_letra`, `musica_duracao`, `musica_nacional`) VALUES (?,?,?,?,?,?)");
-			stmt.setInt(1,c.getMusica_id());
-			stmt.setString(2,c.getMusica_titulo());
-			stmt.setString(3,c.getMusica_cantores());
-			stmt.setString(4,c.getMusica_compositores());
-			stmt.setString(5,c.getMusica_letra());
-			stmt.setFloat(6,c.getMusica_duracao());
-			stmt.setBoolean(7,c.isMusica_nacional());
+			stmt = con.prepareStatement("INSERT INTO `musicas`(`musica_titulo`, `musica_cantores`, `musica_compositores`, `musica_letra`, `musica_duracao`, `musica_nacional`) VALUES (?,?,?,?,?,?)");
+			stmt.setString(1,c.getMusica_titulo());
+			stmt.setString(2,c.getMusica_cantores());
+			stmt.setString(3,c.getMusica_compositores());
+			stmt.setString(4,c.getMusica_letra());
+			stmt.setFloat(5,c.getMusica_duracao());
+			stmt.setBoolean(6,c.isMusica_nacional());
 			stmt.executeUpdate();
 			JOptionPane.showMessageDialog(null, "Cadastro na tabela top");
 		}
@@ -44,7 +43,7 @@ public class MusicaDAO {
 		List<Musica> cs = new ArrayList<>();
 		
 		try {
-			stmt = con.prepareStatement("SELECT * FROM calcado;");
+			stmt = con.prepareStatement("SELECT * FROM musicas;");
 			rs = stmt.executeQuery();
 			while(rs.next()) {
 				Musica c = new Musica();
@@ -78,7 +77,7 @@ public class MusicaDAO {
 		Musica c = new Musica();
 		
 		try {
-			stmt = con.prepareStatement("SELECT * FROM spotipy WHERE musica_id=? Limit 1");
+			stmt = con.prepareStatement("SELECT * FROM musicas WHERE musica_id=? Limit 1");
 			stmt.setInt(1, id);
 			rs = stmt.executeQuery();
 			if(rs != null && rs.next()) {
@@ -105,14 +104,14 @@ public class MusicaDAO {
 		PreparedStatement stmt = null;
 		
 		try {
-			stmt = con.prepareStatement("UPDATE `spotipy` SET `musica_titulo`=?,`musica_cantores`=?,`musica_compositores`=?,`musica_letra`=?,`musica_duracao`=?,`musica_nacional`=? WHERE `musica_id`=? LIMIT 1");
-			stmt.setInt(1,c.getMusica_id());
-			stmt.setString(2,c.getMusica_titulo());
-			stmt.setString(3,c.getMusica_cantores());
-			stmt.setString(4,c.getMusica_compositores());
-			stmt.setString(5,c.getMusica_letra());
-			stmt.setFloat(6,c.getMusica_duracao());
-			stmt.setBoolean(7,c.isMusica_nacional());
+			stmt = con.prepareStatement("UPDATE `musicas` SET `musica_titulo`=?,`musica_cantores`=?,`musica_compositores`=?,`musica_letra`=?,`musica_duracao`=?,`musica_nacional`=? WHERE `musica_id`=? LIMIT 1");
+			stmt.setString(1,c.getMusica_titulo());
+			stmt.setString(2,c.getMusica_cantores());
+			stmt.setString(3,c.getMusica_compositores());
+			stmt.setString(4,c.getMusica_letra());
+			stmt.setFloat(5,c.getMusica_duracao());
+			stmt.setBoolean(6,c.isMusica_nacional());
+			stmt.setInt(7,c.getMusica_id());
 			stmt.executeUpdate();
 			JOptionPane.showMessageDialog(null,"atualizou");
 		} catch (SQLException e) {
@@ -128,7 +127,7 @@ public class MusicaDAO {
 		Connection con = ConnectionFactory.getConnection();
 		PreparedStatement stmt = null;
 		try {
-			stmt = con.prepareStatement("DELETE FROM musica WHERE musica_id =?");
+			stmt = con.prepareStatement("DELETE FROM musicas WHERE musica_id =?");
 			stmt.setInt(1, c.getMusica_id());
 			stmt.executeUpdate();
 			JOptionPane.showMessageDialog(null, "musica excluida");
